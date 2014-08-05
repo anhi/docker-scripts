@@ -1,0 +1,36 @@
+<VirtualHost *:443>
+
+    ServerAdmin admin@localhost
+    ServerName 127.0.0.1
+    ServerAlias localhost
+
+    <Proxy balancer://galaxyjobs>
+        BalancerMember http://localhost:8079
+    </Proxy>
+
+    <Proxy balancer://galaxy>
+        BalancerMember http://localhost:8080
+        #BalancerMember http://localhost:8081
+        #BalancerMember http://localhost:8082
+        #BalancerMember http://localhost:8083
+        #BalancerMember http://localhost:8111
+        #BalancerMember http://localhost:8112
+        #BalancerMember http://localhost:8113
+    </Proxy>
+
+    RewriteEngine on
+    #RewriteCond %{HTTP_HOST} localhost$
+    RewriteRule ^/static/style/(.*) /ballaxy/static/june_2007_style/blue/$1 [L]
+    RewriteRule ^/static/scripts/(.*) /ballaxy/static/scripts/packed/$1 [L]
+    RewriteRule ^/static/(.*) /ballaxy/static/$1 [L]
+    RewriteRule ^/favicon.ico /ballaxy/static/favicon.ico [L]
+    RewriteRule ^/robots.txt /ballaxy/static/robots.txt [L]
+    RewriteRule ^/admin/jobs(.*) balancer://galaxyjobs/admin/jobs$1 [P]
+    RewriteRule ^/(.*) balancer://galaxy/$1 [P]
+
+
+    <Location "/">
+        XSendFile on
+        XSendFilePath /ballaxy/
+    </Location>
+</VirtualHost>
