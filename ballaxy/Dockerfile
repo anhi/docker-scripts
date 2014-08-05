@@ -9,6 +9,9 @@ MAINTAINER Andreas Hildebrandt, andreas.hildebrandt@uni-mainz.de
 # make sure the package repository is up to date
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update
 
+# workaround for broken docker/kernel interaction in adduser (see https://github.com/docker/docker/issues/6345)
+RUN ln -s -f /bin/true /usr/bin/chfn
+
 # Set Apache User and Group
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
