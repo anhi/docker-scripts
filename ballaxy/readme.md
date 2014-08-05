@@ -42,9 +42,7 @@ This enables you to have different export folders for different sessions - means
 Support & Bug Reports
 =====================
 
-You can file an issue here https://github.com/anhi/ballaxy/issues or ask
-us on the Galaxy development list http://lists.bx.psu.edu/listinfo/galaxy-dev
-
+You can file an issue here https://github.com/anhi/ballaxy/issues.
 
 Licence (MIT)
 =============
