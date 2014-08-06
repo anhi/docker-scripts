@@ -35,8 +35,15 @@ def create_pg_db(user, password, database, database_path):
     # initialize a new postgres database
     subprocess.call('sudo -u postgres %s --auth=trust --pgdata=%s' % (os.path.join(PG_BIN, 'initdb'), database_path), shell=True)
 
+    crt_path = os.path.join(database_path, 'server.crt')
+    key_path = os.path.join(database_path, 'server.key')
+
     shutil.copy('/etc/ssl/certs/ssl-cert-snakeoil.pem', os.path.join(database_path, 'server.crt'))
     shutil.copy('/etc/ssl/private/ssl-cert-snakeoil.key', os.path.join(database_path, 'server.key'))
+    cmd = 'sed -i "s|ssl_cert_file = .*|ssl_cert_file = \'%s\'|g" %s' % (crt_path, PG_CONF)
+    subprocess.call(cmd, shell=True)
+    cmd = 'sed -i "s|ssl_key_file = .*|ssl_key_file = \'%s\'|g" %s' % (key_path, PG_CONF)
+    subprocess.call(cmd, shell=True)
     set_pg_permission( os.path.join(database_path, 'server.crt') )
     set_pg_permission( os.path.join(database_path, 'server.key') )
 
