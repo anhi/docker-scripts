@@ -23,6 +23,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y au
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y gfortran
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y cmake
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y git-core
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y ssh-client
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y libatlas-base-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y libblas-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y liblapack-dev
