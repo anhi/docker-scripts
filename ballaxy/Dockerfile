@@ -26,11 +26,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y gi
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y libatlas-base-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y libblas-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y liblapack-dev
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y mercurial
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y subversion
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y python-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y pkg-config
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y openjdk-7-jre
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y python-setuptools
 
 # Install all requirements that are recommend by the BALL project
@@ -133,6 +131,7 @@ RUN rm $PG_DATA_DIR_DEFAULT -rf
 RUN python setup_postgresql.py --dbuser galaxy --dbpassword galaxy --db-name galaxy --dbpath $PG_DATA_DIR_DEFAULT
 RUN service postgresql start && sh create_db.sh
 RUN service postgresql start && sleep 5 && python create_galaxy_user.py --user admin@galaxy.org --password admin --key admin
+RUN service postgresql start && sleep 5 && python create_galaxy_user.py --user guest@ballaxy.local --password ballaxyguest --key ballaxyguest
 RUN service postgresql start && sh run.sh --daemon && sleep 120
 
 
